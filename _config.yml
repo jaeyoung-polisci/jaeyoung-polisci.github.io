@@ -24,11 +24,11 @@ repository               : "academicpages/academicpages.github.io"
 author:
   # Biographic information
   avatar           : "profile.jpeg"
-  name             : "Your Sidebar Name"
+  name             : "Jaeyoung Lee"
   pronouns         : # example: "she/her"  
   bio              : "Phd Candidate in Political Science"
   location         : "Urbana-Champaign, IL"
-  employer         : "University of Illinois at Urbana-Champaign"
+  employer         : "University of Illinois \nat Urbana-Champaign"
   uri              : # URL
   email            : "jl192@illinois.edu" 
 
