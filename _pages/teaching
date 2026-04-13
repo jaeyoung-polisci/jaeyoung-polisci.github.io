@@ -1,7 +1,13 @@
+---
+layout: archive
+title: "Teaching"
+permalink: /teaching/
+author_profile: true
+---
+
 ## University of Illinois Urbana-Champaign
 
 - **PS280: Introduction to International Relations** (Spring 2026)  
-  - Teaching evaluation: 
   - Sample teaching materials: [PDF](/files/ps280_slides.pdf)  
   - Full evaluation report: [PDF](/files/ps280_evaluation.pdf)  
 
