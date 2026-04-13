@@ -5,7 +5,7 @@ permalink: /data/
 author_profile: true
 ---
 
-This page presents selected descriptive patterns from my research on foreign aid publicity and donor credit-claiming. These figures are drawn from an original dataset of foreign aid projects in the Philippines, covering both OECD donors and China.
+This page presents selected descriptive patterns from my dissertation project on foreign aid publicity. These figures draw from an original dataset exploring how foreign aid projects are communicated in Philippine government press releases, covering both OECD donors and China.  
 
 ---
 
