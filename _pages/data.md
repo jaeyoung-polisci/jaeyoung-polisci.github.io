@@ -11,7 +11,7 @@ This page presents selected descriptive patterns from my research on foreign aid
 
 ## Project Size and Donor Visibility
 
-![Project size](/images/slide_size.png)
+![Project size](/images/slide_size_.png)
 
 *Larger projects are more likely to mention donors, and donor attribution rates increase with project size.*
 
