@@ -9,21 +9,23 @@ author_profile: true
 
 - **PS280: Introduction to International Relations** (Spring 2026)  
   - Sample teaching materials: [PDF](/files/ps280_slides.pdf)  
-  - Full evaluation report: [PDF](/files/ps280_evaluation.pdf)  
+  - Full evaluation report: [PDF](/files/ps280_evaluation.pdf)
 
 - **PS272: Women and Politics** (Fall 2025)  
   - Teaching evaluation: 4.78/5.0  
   - Sample teaching materials: [PDF](/files/ps272_slides.pdf)  
-  - Full evaluation report: [PDF](/files/ps272_evaluation.pdf) 
+  - Full evaluation report: [PDF](/files/ps272_evaluation.pdf)
 
-- **PS282: Governing Globalization** (Spring 2024, Fall 2022)  
-  (*Teachers Ranked as Excellent*)  
+- **PS282: Governing Globalization*** (Spring 2024, Fall 2022)  
   - Teaching evaluation: 4.88/5.0  
   - Sample teaching materials: [PDF](/files/ps282_slides.pdf)  
   - Full evaluation report: [PDF](/files/ps282_evaluation.pdf)
 
-- **PS270: Introduction to Political Theory** (Spring 2023)  
-  (*Teachers Ranked as Excellent*)  
+- **PS270: Introduction to Political Theory*** (Spring 2023)  
   - Teaching evaluation: 4.6/5.0  
   - Sample teaching materials: [PDF](/files/ps270_slides.pdf)  
   - Full evaluation report: [PDF](/files/ps270_evaluation.pdf)
+
+<p style="font-size: 0.9em; text-align: right; margin-top: 1em;">
+  * Courses marked with an asterisk were listed as “Teachers Ranked as Excellent” (top 10% university-wide).
+</p>
