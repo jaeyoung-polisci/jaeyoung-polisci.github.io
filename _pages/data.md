@@ -11,7 +11,7 @@ This page presents selected descriptive patterns from my research on foreign aid
 
 ## Project Size and Donor Visibility
 
-![Project size](/images/aid_size.png)
+![Project size](/images/slide_size.png)
 
 *Larger projects are more likely to mention donors, and donor attribution rates increase with project size.*
 
@@ -19,7 +19,7 @@ This page presents selected descriptive patterns from my research on foreign aid
 
 ## Trends Over Time
 
-![Trends](/images/trend.png)
+![Trends](/images/slide_trend.png)
 
 *Donor visibility declines over time, while projects without explicit donor signals increase.*
 
@@ -27,7 +27,7 @@ This page presents selected descriptive patterns from my research on foreign aid
 
 ## Sectoral Variation (Concealment)
 
-![Sector concealment](/images/sector_c.png)
+![Sector concealment](/images/slide_sector_c.png)
 
 *Donor concealment is most common in agricultural and health-related sectors.*
 
@@ -35,7 +35,7 @@ This page presents selected descriptive patterns from my research on foreign aid
 
 ## Sectoral Variation (Credit Claiming)
 
-![Sector credit](/images/sector_a.png)
+![Sector credit](/images/slide_sector_a.png)
 
 *Donor attribution is highest in infrastructure and governance-related sectors.*
 
@@ -43,7 +43,7 @@ This page presents selected descriptive patterns from my research on foreign aid
 
 ## Donor-Level Patterns
 
-![Heatmap](/images/heatmap.png)
+![Heatmap](/images/slide_heatmap.png)
 
 *Donor visibility varies significantly across countries and over time.*
 
@@ -51,6 +51,6 @@ This page presents selected descriptive patterns from my research on foreign aid
 
 ## Distribution by Donor Type
 
-![Donor bar](/images/donor_bar.png)
+![Donor bar](/images/slide_donor_bar.png)
 
 *Multilateral organizations are more likely to be credited than bilateral donors.*
