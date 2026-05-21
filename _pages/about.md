@@ -68,10 +68,11 @@ I am a PhD candidate in Political Science at the University of Illinois at Urban
 My dissertation develops a theory of strategic publicity management, asking when and why aid-receiving governments publicize, obscure, or conceal foreign aid projects. I distinguish four communication strategies — explicitly naming the donor, vaguely crediting "development partners," claiming credit while writing the donor out, or staying silent — and argue that governments choose among them based on how politically costly a donor is to be associated with. To test this, I build an original dataset linking over 80,000 aid project records to official government communications across seven aid-recipient countries, complemented by field interviews and an elite conjoint experiment in the Philippines.
 
 <div class="interest-tags" markdown="0">
-  <span>Political economy</span>
+  <span>Politics of aid</span>
   <span>Foreign aid</span>
   <span>Development</span>
   <span>Credit-claiming</span>
+  <span>Strategic communication</span>
 </div>
 
 <hr class="home-divider" />
@@ -80,7 +81,7 @@ My dissertation develops a theory of strategic publicity management, asking when
 
 <div class="news-item" markdown="0">
   <span class="date">Summer 2026</span>
-  <span class="what">Named a Schroeder Summer Fellow at the Cline Center for Advanced Social Research, UIUC.</span>
+  <span class="what">Awarded a Schroeder Summer Graduate Fellowship at the Cline Center for Advanced Social Research, UIUC.</span>
 </div>
 
 <div class="news-item" markdown="0">
