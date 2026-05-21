@@ -86,7 +86,7 @@ My dissertation develops a theory of strategic publicity management, asking when
 
 <div class="news-item" markdown="0">
   <span class="date">May 2026</span>
-  <span class="what">Conducting dissertation fieldwork in Makati, Manila, from May 28 to June 26.</span>
+  <span class="what">Conducting dissertation fieldwork in Manila, Philippines, interviewing officials, donor representatives, and journalists (May 28 – June 26).</span>
 </div>
 
 <!--
