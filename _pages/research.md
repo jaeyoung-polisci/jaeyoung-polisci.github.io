@@ -123,7 +123,7 @@ author_profile: true
 
 <div class="proj" markdown="0">
   <div class="proj-meta">
-    <span class="tag tag--review">Working Paper</span>
+    <span class="tag tag--working">Working Paper</span>
     <span class="proj-links">
       <!-- <a href="/files/donors_draft.pdf">Draft</a> -->
     </span>
@@ -140,7 +140,7 @@ author_profile: true
 
 <div class="proj" markdown="0">
   <div class="proj-meta">
-    <span class="tag tag--working">Working Paper</span>
+    <span class="tag tag--prep">In Progress</span>
     <span class="proj-links">
     </span>
   </div>
