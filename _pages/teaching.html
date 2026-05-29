@@ -6,23 +6,22 @@ author_profile: true
 ---
 
 <style>
-/* Make Teaching content column match Research page width */
-.layout--single .archive {
-  width: 100% !important;
-  max-width: 100% !important;
-  float: none !important;
-}
-
-.layout--single .list__item {
-  width: 100% !important;
-  max-width: 100% !important;
+/* Teaching page: make archive/list content visually match Research width */
+.page__content .list__item {
   padding-right: 0 !important;
 }
 
-.layout--single .archive__item {
-  width: 100% !important;
-  max-width: 100% !important;
+.page__content .archive__item {
+  width: calc(100% - 12rem) !important;
+  max-width: calc(100% - 12rem) !important;
   box-sizing: border-box !important;
+}
+
+@media (max-width: 1024px) {
+  .page__content .archive__item {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
 }
 </style>
 
