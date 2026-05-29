@@ -1,10 +1,15 @@
 ---
 permalink: /
 title: ""
+excerpt: ""
 author_profile: true
 redirect_from: 
   - /about/
   - /about.html
+header:
+  overlay_image: /images/manila_fieldwork.jpg
+  overlay_filter: 0.3   # 어둡게 할수록 텍스트 가독성 ↑ (0~1)
+  caption: "Manila, Philippines — Fieldwork 2026"
 ---
 
 <style>
