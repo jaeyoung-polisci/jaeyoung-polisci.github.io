@@ -9,6 +9,11 @@ author_profile: true
 /* ── Research page styles ───────────────────────────────────────── */
 /* Edit values here once — they apply to every project card below.   */
 
+.page__content {
+  width: 100%;
+  max-width: 100%;
+}
+  
 .proj {
   width: 100%;
   box-sizing: border-box;
