@@ -3,7 +3,7 @@ permalink: /
 title: ""
 header:
   overlay_image: manila_fieldwork.jpg
-  overlay_filter: 0.3
+  overlay_filter: 0.15
   caption: "Manila, Philippines — Fieldwork 2026"
 excerpt: " "
 author_profile: true
