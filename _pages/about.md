@@ -14,7 +14,10 @@ redirect_from:
 
 <style>
 /* ── Home page styles ───────────────────────────────────────────── */
-
+/* Banner height */
+.page__hero--overlay {
+  min-height: 420px;
+}
 /* Shared small-caps section heading (used by both About and News) */
 .section-heading {
   font-size: 0.8rem;
