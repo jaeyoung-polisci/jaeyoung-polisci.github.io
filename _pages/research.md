@@ -10,6 +10,8 @@ author_profile: true
 /* Edit values here once — they apply to every project card below.   */
 
 .proj {
+  width: 100%;
+  box-sizing: border-box;
   border: 1px solid rgba(128, 128, 128, 0.25);
   border-radius: 10px;
   padding: 22px 24px;
