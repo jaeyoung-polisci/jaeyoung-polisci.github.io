@@ -4,6 +4,8 @@ title: "Teaching"
 permalink: /teaching/
 author_profile: true
 excerpt: "Teaching experience of Jaeyoung Lee at the University of Illinois Urbana-Champaign."
+read_time: false
+show_date: false
 ---
 
 <style>
