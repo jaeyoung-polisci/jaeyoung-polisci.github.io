@@ -86,10 +86,11 @@ show_date: false
     <span class="course-term">Spring 2026</span>
   </div>
   <div class="course-badges">
-    <span class="badge badge--pending">Evaluations forthcoming</span>
+    <span class="badge badge--pending">Evaluations 4.53 / 5.0</span>
   </div>
   <div class="course-links">
     <a href="/files/ps280_slides.pdf">Sample materials</a>
+    <a href="/files/ps280_evaluation.pdf">Full report</a>
   </div>
 </div>
 
