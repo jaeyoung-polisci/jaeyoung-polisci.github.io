@@ -3,7 +3,7 @@ permalink: /cv/
 title: "CV"
 ---
 
-Last updated: March 2026  
+Last updated: September 2026  
 
 You can also download my CV here: [Download CV](/files/Jaeyoung_Lee_CV.pdf)
 
