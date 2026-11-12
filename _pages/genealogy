@@ -1,0 +1,72 @@
+---
+layout: archive
+title: "Academic Genealogy"
+permalink: /genealogy/
+author_profile: true
+---
+
+<p>My academic lineage, traced through my dissertation co-chairs.
+Both lines meet at Stanley Hoffmann.</p>
+
+<div style="background:#faf8f4; border-radius:12px; padding:20px 12px; overflow-x:auto;">
+  <div id="genealogy" style="min-width:560px;"></div>
+</div>
+
+<script>
+(function () {
+  // x = 가로 위치(0~680), row = 세대(0이 맨 위)
+  var people = [
+    { id: 'tbd',   name: 'Advisor TBD',        sub: '',                      x: 110, row: 0, kind: 'unknown' },
+    { id: 'beer',  name: 'Samuel H. Beer',     sub: '',                      x: 275, row: 0 },
+    { id: 'hoff',  name: 'Stanley Hoffmann',   sub: 'Univ. of Paris · 1953', x: 445, row: 0, kind: 'shared' },
+    { id: 'gour',  name: 'Peter Gourevitch',   sub: 'Harvard · 1969',        x: 110, row: 1 },
+    { id: 'kahl',  name: 'Miles Kahler',       sub: 'Harvard',               x: 360, row: 1 },
+    { id: 'keoh',  name: 'Robert O. Keohane',  sub: 'Harvard · 1966',        x: 570, row: 1 },
+    { id: 'pinto', name: 'Pablo M. Pinto',     sub: 'UC San Diego · 2004',   x: 235, row: 2 },
+    { id: 'bush',  name: 'Sarah Sunn Bush',    sub: 'Princeton · 2011',      x: 570, row: 2 },
+    { id: 'wint',  name: 'Matthew S. Winters', sub: 'Columbia · 2009',       x: 235, row: 3 },
+    { id: 'obu',   name: "Cleo O'Brien-Udry",  sub: 'Yale · 2023',           x: 570, row: 3 },
+    { id: 'paul',  name: 'Paul Un',            sub: 'UIUC · Ph.D. student',  x: 140, row: 4, kind: 'sibling' },
+    { id: 'me',    name: 'Jaeyoung Lee',       sub: 'UIUC · exp. 2028',      x: 400, row: 4, kind: 'me' }
+  ];
+  // [윗세대, 아랫세대]
+  var links = [
+    ['tbd','gour'], ['beer','kahl'], ['hoff','kahl'], ['hoff','keoh'],
+    ['gour','pinto'], ['kahl','pinto'], ['keoh','bush'],
+    ['pinto','wint'], ['bush','obu'],
+    ['wint','paul'], ['wint','me'], ['obu','me']
+  ];
+
+  var W = 680, rowGap = 104, top = 44, bw = 144, bh = 50;
+  var maxRow = Math.max.apply(null, people.map(function (p) { return p.row; }));
+  var H = top + rowGap * maxRow + 50;
+  var byId = {};
+  people.forEach(function (p) { p.y = top + p.row * rowGap; byId[p.id] = p; });
+  var esc = function (s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;'); };
+
+  var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Academic genealogy tree">';
+  links.forEach(function (l) {
+    var a = byId[l[0]], b = byId[l[1]];
+    var y1 = a.y + bh / 2, y2 = b.y - bh / 2, ym = (y1 + y2) / 2;
+    s += '<path d="M' + a.x + ' ' + y1 + ' C' + a.x + ' ' + ym + ',' + b.x + ' ' + ym + ',' + b.x + ' ' + y2 +
+         '" fill="none" stroke="#c9c2b6" stroke-width="1.4"/>';
+  });
+  var styles = {
+    me:      { fill: '#2d6f80', stroke: '#2d6f80', name: '#ffffff', sub: '#d3e6eb', dash: '' },
+    sibling: { fill: '#eef5f6', stroke: '#b7d3da', name: '#2b2b2b', sub: '#6f7f83', dash: '' },
+    shared:  { fill: '#fffaf0', stroke: '#c9a24a', name: '#2b2b2b', sub: '#8a7440', dash: '' },
+    unknown: { fill: 'none',    stroke: '#c9c2b6', name: '#a39d93', sub: '#a39d93', dash: '4 4' },
+    base:    { fill: '#ffffff', stroke: '#e2ddd3', name: '#2b2b2b', sub: '#8a857c', dash: '' }
+  };
+  people.forEach(function (p) {
+    var st = styles[p.kind || 'base'];
+    s += '<rect x="' + (p.x - bw / 2) + '" y="' + (p.y - bh / 2) + '" width="' + bw + '" height="' + bh +
+         '" rx="10" fill="' + st.fill + '" stroke="' + st.stroke + '" stroke-width="' + (p.kind === 'shared' ? 1.5 : 1) +
+         '"' + (st.dash ? ' stroke-dasharray="' + st.dash + '"' : '') + '/>';
+    s += '<text x="' + p.x + '" y="' + (p.y + (p.sub ? -3 : 5)) + '" text-anchor="middle" font-family="Georgia, \'Times New Roman\', serif" font-size="14.5" fill="' + st.name + '">' + esc(p.name) + '</text>';
+    if (p.sub) s += '<text x="' + p.x + '" y="' + (p.y + 14) + '" text-anchor="middle" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11" letter-spacing="0.3" fill="' + st.sub + '">' + esc(p.sub) + '</text>';
+  });
+  s += '</svg>';
+  document.getElementById('genealogy').innerHTML = s;
+})();
+</script>
