@@ -67,13 +67,20 @@ redirect_from:
 .news-item .what {
   font-size: 0.97rem;
 }
+
+/* Small footer note under News */
+.home-note {
+  margin-top: 28px;
+  font-size: 0.85rem;
+  opacity: 0.65;
+}
 </style>
 
 <p class="section-heading">About</p>
 
 I am a PhD candidate in Political Science at the University of Illinois at Urbana-Champaign. My research lies in the political economy of foreign aid, with a focus on how recipient governments in developing countries strategically communicate about the aid they receive.
 
-My [dissertation](/research/) develops a theory of strategic publicity management, asking when and why aid-receiving governments publicize or conceal foreign aid projects. I distinguish four communication strategies — publicizing a project while explicitly naming the donor, publicizing a project while vaguely crediting "development partners," publicizing a project without naming the donor, or staying completely silent — argue that governments choose among them based on the political costs and returns associated with donor visibility. To test this, I build an original dataset linking over 80,000 aid project records to official government communications across seven aid-recipient countries, complemented by field interviews and an elite conjoint experiment in the Philippines
+My [dissertation](/research/) develops a theory of strategic publicity management, asking when and why aid-receiving governments publicize or conceal foreign aid projects. I distinguish four communication strategies — publicizing a project while explicitly naming the donor, publicizing a project while vaguely crediting "development partners," publicizing a project without naming the donor, or staying completely silent — and argue that governments choose among them based on the political costs and returns associated with donor visibility. To test this, I build an original dataset linking over 80,000 aid project records to official government communications across seven aid-recipient countries, complemented by field interviews and an elite conjoint experiment in the Philippines.
 
 <div class="interest-tags" markdown="0">
   <span>Politics of aid</span>
@@ -88,14 +95,21 @@ My [dissertation](/research/) develops a theory of strategic publicity managemen
 <p class="section-heading">News</p>
 
 <div class="news-item" markdown="0">
+  <span class="date">November 2026</span>
+  <span class="what">Awarded a travel grant from the Center for East Asian and Pacific Studies (CEAPS), UIUC. I will attend the International Studies Association (ISA) Annual Convention in March 2027.</span>
+</div>
+
+<div class="news-item" markdown="0">
   <span class="date">Summer 2026</span>
   <span class="what">Awarded a Schroeder Summer Graduate Fellowship at the Cline Center for Advanced Social Research, UIUC.</span>
 </div>
 
 <div class="news-item" markdown="0">
   <span class="date">May 2026</span>
-  <span class="what">Conducting dissertation fieldwork in Manila, Philippines, interviewing officials, donor representatives, and journalists (May 28 – June 26).</span>
+  <span class="what">Conducted dissertation fieldwork in Manila, Philippines, interviewing officials, donor representatives, and journalists (May 28 – June 26).</span>
 </div>
+
+<p class="home-note">Curious where my training comes from? See my <a href="/genealogy/">academic genealogy</a>.</p>
 
 <!--
   To add a news item, copy one block above and keep the most recent at the top:
