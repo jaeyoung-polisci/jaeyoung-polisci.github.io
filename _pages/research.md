@@ -9,7 +9,6 @@ author_profile: true
 /* ── Research page styles ───────────────────────────────────────── */
 /* Edit values here once — they apply to every project card below.   */
 
-  
 .proj {
   width: 100%;
   box-sizing: border-box;
@@ -33,9 +32,40 @@ author_profile: true
 }
 
 .proj .authors {
-  margin: 0 0 12px;
+  margin: 0 0 8px;
   font-size: 0.92rem;
   opacity: 0.75;
+}
+
+/* One-sentence takeaway, always visible */
+.proj .lede {
+  margin: 0 0 10px;
+  font-size: 0.97rem;
+  line-height: 1.6;
+}
+
+/* Methods / data line */
+.proj .methods {
+  margin: 0 0 12px;
+  font-size: 0.82rem;
+  letter-spacing: 0.01em;
+  opacity: 0.65;
+}
+
+/* Optional figure inside a card */
+.proj figure {
+  margin: 4px 0 14px;
+}
+.proj figure img {
+  width: 100%;
+  max-width: 560px;
+  border-radius: 6px;
+  border: 1px solid rgba(128, 128, 128, 0.2);
+}
+.proj figcaption {
+  margin-top: 6px;
+  font-size: 0.82rem;
+  opacity: 0.7;
 }
 
 /* Status tags + links sit on one row */
@@ -62,19 +92,26 @@ author_profile: true
 .tag--rr      { background: rgba(83, 74, 183, 0.15);  color: #534ab7; }
 .tag--prep    { background: rgba(128, 128, 128, 0.18); color: inherit; opacity: 0.85; }
 
+/* Links render as small outlined buttons */
 .proj-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
+  gap: 8px;
   margin-left: auto;
-  font-size: 0.88rem;
+  font-size: 0.8rem;
 }
 
 .proj-links a {
   text-decoration: none;
-  border-bottom: 1px solid transparent;
+  padding: 2px 10px;
+  border: 1px solid rgba(42, 109, 176, 0.45);
+  border-radius: 6px;
+  color: #2a6db0;
+  white-space: nowrap;
 }
-.proj-links a:hover { border-bottom-color: currentColor; }
+.proj-links a:hover {
+  background: rgba(42, 109, 176, 0.1);
+}
 
 /* Abstract toggle */
 .proj details { margin-top: 4px; }
@@ -108,12 +145,23 @@ author_profile: true
     <span class="tag tag--jmp">Job Market Paper</span>
     <span class="tag tag--prep">In Progress</span>
     <span class="proj-links">
+      <a href="/data/">Data</a>
       <!-- Add links as they become available, e.g.: -->
       <!-- <a href="/files/jmp_draft.pdf">Draft</a> -->
-      <!-- <a href="/data/">Data</a> -->
+      <!-- <a href="https://osf.io/xxxxx">Pre-registration</a> -->
     </span>
   </div>
   <h3>Strategic Publicity Management in Foreign Aid: When and Why Do Governments Publicize or Conceal Aid Projects?</h3>
+  <p class="lede">How aid-receiving governments decide whether to name donors, obscure them, claim credit for aid-funded projects, or stay silent about them.</p>
+  <p class="methods">Cross-national press release data · Interviews · Conjoint experiment</p>
+
+  <!-- Figure: copy an image path from _pages/data.md, then remove this comment wrapper.
+  <figure>
+    <img src="/images/YOUR_FIGURE.png" alt="Donor visibility in government press releases over time">
+    <figcaption>Donor visibility in Philippine government press releases declines over time. <a href="/data/">More figures</a></figcaption>
+  </figure>
+  -->
+
   <details>
     <summary>Abstract</summary>
     <p>
@@ -133,6 +181,8 @@ author_profile: true
   </div>
   <h3>What To Do If Donors Do Not Deliver: Recipient Responses to Poor Implementation of Foreign Aid Projects</h3>
   <p class="authors">with Matthew S. Winters</p>
+  <p class="lede">After poor World Bank performance, recipient governments approve fewer new projects and take longer to make loans effective.</p>
+  <p class="methods">World Bank project evaluation data, 1995–2020</p>
   <details>
     <summary>Abstract</summary>
     <p>
@@ -148,6 +198,7 @@ author_profile: true
     </span>
   </div>
   <h3>When Foreign Aid Wins Hearts and Minds: Sociotropic vs. Pocketbook Effects</h3>
+  <p class="lede">Does aid improve attitudes toward donors because people benefit personally, or because they see it helping their country?</p>
   <details>
     <summary>Abstract</summary>
     <p>
