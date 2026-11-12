@@ -70,7 +70,7 @@ redirect_from:
 
 /* Small footer note under News */
 .home-note {
-  margin-top: 28px;
+  margin: -8px 0 24px;
   font-size: 0.85rem;
   opacity: 0.65;
 }
@@ -90,7 +90,11 @@ My [dissertation](/research/) develops a theory of strategic publicity managemen
   <span>Strategic communication</span>
 </div>
 
+<p class="home-note">Curious where my training comes from? See my <a href="/genealogy/">academic genealogy</a>.</p>
+
 <hr class="home-divider" />
+
+
 
 <p class="section-heading">News</p>
 
@@ -109,7 +113,6 @@ My [dissertation](/research/) develops a theory of strategic publicity managemen
   <span class="what">Conducted dissertation fieldwork in Manila, Philippines, interviewing officials, donor representatives, and journalists (May 28 – June 26).</span>
 </div>
 
-<p class="home-note">Curious where my training comes from? See my <a href="/genealogy/">academic genealogy</a>.</p>
 
 <!--
   To add a news item, copy one block above and keep the most recent at the top:
