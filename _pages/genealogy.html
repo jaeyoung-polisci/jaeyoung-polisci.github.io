@@ -5,35 +5,49 @@ permalink: /genealogy/
 author_profile: true
 ---
 
-<p>My academic lineage, traced through my dissertation co-chairs.</p>
+<p>My academic lineage, traced through my dissertation co-chairs and their committees.</p>
 
 <div style="background:#faf8f4; border-radius:12px; padding:20px 12px; overflow-x:auto;">
-  <div id="genealogy" style="min-width:560px;"></div>
+  <div id="genealogy" style="min-width:720px;"></div>
 </div>
 
 <script>
 (function () {
   var people = [
-    { id: 'beer',  name: 'Samuel H. Beer',     sub: '',                      x: 275, row: 0 },
-    { id: 'hoff',  name: 'Stanley Hoffmann',   sub: 'Univ. of Paris · 1953', x: 445, row: 0, kind: 'shared' },
-    { id: 'gour',  name: 'Peter Gourevitch',   sub: 'Harvard · 1969',        x: 110, row: 1 },
-    { id: 'kahl',  name: 'Miles Kahler',       sub: 'Harvard',               x: 360, row: 1 },
-    { id: 'keoh',  name: 'Robert O. Keohane',  sub: 'Harvard · 1966',        x: 570, row: 1 },
-    { id: 'pinto', name: 'Pablo M. Pinto',     sub: 'UC San Diego · 2004',   x: 235, row: 2 },
-    { id: 'bush',  name: 'Sarah Bush',         sub: 'Princeton · 2011',      x: 570, row: 2 },
-    { id: 'wint',  name: 'Matt Winters',       sub: 'Columbia · 2009',       x: 235, row: 3 },
-    { id: 'obu',   name: "Cleo O'Brien-Udry",  sub: 'Yale · 2023',           x: 570, row: 3 },
-    { id: 'paul',  name: 'Paul Un',            sub: 'University of Konstanz · Postdoc',  x: 140, row: 4, kind: 'sibling', w: 200 },
-    { id: 'me',    name: 'Jaeyoung Lee',       sub: 'UIUC · exp. 2028',      x: 400, row: 4, kind: 'me' }
+    // row 0
+    { id: 'beer',  name: 'Samuel H. Beer',      sub: '',                      x: 225, row: 0 },
+    { id: 'hoff',  name: 'Stanley Hoffmann',    sub: 'Univ. of Paris · 1953', x: 455, row: 0, kind: 'shared' },
+    { id: 'powl',  name: 'G. Bingham Powell',   sub: '',                      x: 765, row: 0 },
+    // row 1
+    { id: 'gour',  name: 'Peter Gourevitch',    sub: 'Harvard · 1969',        x: 150, row: 1 },
+    { id: 'kahl',  name: 'Miles Kahler',        sub: 'Harvard',               x: 300, row: 1 },
+    { id: 'hump',  name: 'Macartan Humphreys',  sub: 'Harvard · 2003',        x: 455, row: 1, kind: 'shared' },
+    { id: 'keoh',  name: 'Robert O. Keohane',   sub: 'Harvard · 1966',        x: 610, row: 1 },
+    { id: 'hube',  name: 'John D. Huber',       sub: 'Rochester · 1991',      x: 765, row: 1 },
+    { id: 'muri',  name: 'M. Victoria Murillo', sub: 'Harvard · 1997',        x: 920, row: 1 },
+    // row 2
+    { id: 'epst',  name: 'David Epstein',       sub: '',                      x: 75,  row: 2 },
+    { id: 'pinto', name: 'Pablo M. Pinto',      sub: 'UC San Diego · 2004',   x: 225, row: 2 },
+    { id: 'bush',  name: 'Sarah Bush',          sub: 'Princeton · 2011',      x: 610, row: 2 },
+    { id: 'bald',  name: 'Kate Baldwin',        sub: 'Columbia · 2010',       x: 765, row: 2 },
+    { id: 'schn',  name: 'Christina Schneider', sub: 'Konstanz · 2006',       x: 920, row: 2 },
+    // row 3
+    { id: 'wint',  name: 'Matt Winters',        sub: 'Columbia · 2009',       x: 310, row: 3 },
+    { id: 'obu',   name: "Cleo O'Brien-Udry",   sub: 'Yale · 2023',           x: 765, row: 3 },
+    // row 4
+    { id: 'paul',  name: 'Paul Un',             sub: 'University of Konstanz · Postdoc', x: 170, row: 4, kind: 'sibling', w: 200 },
+    { id: 'me',    name: 'Jaeyoung Lee',        sub: 'UIUC · exp. 2028',      x: 540, row: 4, kind: 'me' }
   ];
   var links = [
-    ['beer','kahl'], ['hoff','kahl'], ['hoff','keoh'],
-    ['gour','pinto'], ['kahl','pinto'], ['keoh','bush'],
-    ['pinto','wint'], ['bush','obu'],
+    ['beer','kahl'], ['hoff','kahl'], ['hoff','keoh'], ['powl','hube'],
+    ['gour','pinto'], ['kahl','pinto'],
+    ['keoh','bush'], ['hump','bald'], ['hube','bald'], ['muri','bald'],
+    ['epst','wint'], ['pinto','wint'], ['hump','wint'],
+    ['bush','obu'], ['bald','obu'], ['schn','obu'],
     ['wint','paul'], ['wint','me'], ['obu','me']
   ];
 
-  var W = 680, rowGap = 104, top = 44, bw = 144, bh = 50;
+  var W = 1000, rowGap = 104, top = 44, bw = 140, bh = 50;
   var maxRow = Math.max.apply(null, people.map(function (p) { return p.row; }));
   var H = top + rowGap * maxRow + 50;
   var byId = {};
