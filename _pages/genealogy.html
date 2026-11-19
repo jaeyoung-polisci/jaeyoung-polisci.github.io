@@ -14,27 +14,22 @@ author_profile: true
 <script>
 (function () {
   var people = [
-    
     { id: 'beer',  name: 'Samuel H. Beer',      sub: '',                      x: 225, row: 0 },
     { id: 'hoff',  name: 'Stanley Hoffmann',    sub: 'Univ. of Paris · 1953', x: 455, row: 0, kind: 'shared' },
     { id: 'powl',  name: 'G. Bingham Powell',   sub: '',                      x: 765, row: 0 },
-  
     { id: 'gour',  name: 'Peter Gourevitch',    sub: 'Harvard · 1969',        x: 150, row: 1 },
     { id: 'kahl',  name: 'Miles Kahler',        sub: 'Harvard',               x: 300, row: 1 },
     { id: 'hump',  name: 'Macartan Humphreys',  sub: 'Harvard · 2003',        x: 455, row: 1, kind: 'shared' },
     { id: 'keoh',  name: 'Robert O. Keohane',   sub: 'Harvard · 1966',        x: 610, row: 1 },
     { id: 'hube',  name: 'John D. Huber',       sub: 'Rochester · 1991',      x: 765, row: 1 },
     { id: 'muri',  name: 'M. Victoria Murillo', sub: 'Harvard · 1997',        x: 920, row: 1 },
-    
     { id: 'epst',  name: 'David Epstein',       sub: '',                      x: 75,  row: 2 },
     { id: 'pinto', name: 'Pablo M. Pinto',      sub: 'UC San Diego · 2004',   x: 225, row: 2 },
     { id: 'bush',  name: 'Sarah Bush',          sub: 'Princeton · 2011',      x: 610, row: 2 },
     { id: 'bald',  name: 'Kate Baldwin',        sub: 'Columbia · 2010',       x: 765, row: 2 },
     { id: 'schn',  name: 'Christina Schneider', sub: 'Konstanz · 2006',       x: 920, row: 2 },
-    
     { id: 'wint',  name: 'Matt Winters',        sub: 'Columbia · 2009',       x: 310, row: 3 },
     { id: 'obu',   name: "Cleo O'Brien-Udry",   sub: 'Yale · 2023',           x: 765, row: 3 },
-    
     { id: 'paul',  name: 'Paul Un',             sub: 'University of Konstanz · Postdoc', x: 170, row: 4, kind: 'sibling', w: 200 },
     { id: 'me',    name: 'Jaeyoung Lee',        sub: 'UIUC · exp. 2028',      x: 540, row: 4, kind: 'me' }
   ];
@@ -75,10 +70,21 @@ author_profile: true
     s += '<rect x="' + (p.x - w / 2) + '" y="' + (p.y - bh / 2) + '" width="' + w + '" height="' + bh +
          '" rx="10" fill="' + st.fill + '" stroke="' + st.stroke + '" stroke-width="' + (p.kind === 'shared' ? 1.5 : 1) +
          '"' + (st.dash ? ' stroke-dasharray="' + st.dash + '"' : '') + '/>';
-    s += '<text x="' + p.x + '" y="' + (p.y + (p.sub ? -3 : 5)) + '" text-anchor="middle" font-family="Georgia, \'Times New Roman\', serif" font-size="14.5" fill="' + st.name + '">' + esc(p.name) + '</text>';
-    if (p.sub) s += '<text x="' + p.x + '" y="' + (p.y + 14) + '" text-anchor="middle" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11" letter-spacing="0.3" fill="' + st.sub + '">' + esc(p.sub) + '</text>';
+    s += '<text data-fit="' + (w - 16) + '" x="' + p.x + '" y="' + (p.y + (p.sub ? -3 : 5)) + '" text-anchor="middle" font-family="Georgia, \'Times New Roman\', serif" font-size="14.5" fill="' + st.name + '">' + esc(p.name) + '</text>';
+    if (p.sub) s += '<text data-fit="' + (w - 16) + '" x="' + p.x + '" y="' + (p.y + 14) + '" text-anchor="middle" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11" letter-spacing="0.3" fill="' + st.sub + '">' + esc(p.sub) + '</text>';
   });
   s += '</svg>';
   document.getElementById('genealogy').innerHTML = s;
+
+  /* shrink any name that is wider than its box */
+  var texts = document.querySelectorAll('#genealogy text[data-fit]');
+  Array.prototype.forEach.call(texts, function (t) {
+    var max = parseFloat(t.getAttribute('data-fit'));
+    var len = t.getComputedTextLength();
+    if (len > max) {
+      var size = parseFloat(t.getAttribute('font-size'));
+      t.setAttribute('font-size', (size * max / len).toFixed(2));
+    }
+  });
 })();
 </script>
