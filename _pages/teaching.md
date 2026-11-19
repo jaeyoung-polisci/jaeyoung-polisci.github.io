@@ -100,18 +100,18 @@ show_date: false
   flex-direction: column;
   justify-content: center;
 }
-.award-label {
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+.award .award-label {
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
   color: #a3822f;
-  margin: 0 0 6px;
+  margin: 0 0 4px;
 }
-.award h3 {
+.award .award-text h3 {
   margin: 0;
-  font-size: 1.05rem;
-  line-height: 1.4;
+  font-size: 1.02rem;
+  font-weight: 500;
+  line-height: 1.45;
 }
 @media (max-width: 600px) {
   .award { flex-direction: column; }
@@ -122,7 +122,7 @@ show_date: false
 ## Teaching Award
 
 <div class="award" markdown="0">
-  <img src="/images/teaching_award_2025.jpg" alt="Jaeyoung Lee receiving the A. Belden Fields Award at the 2025 Political Science Awards Banquet">
+  <img src="{{ '/images/teaching_award_2025.jpg' | relative_url }}" alt="Jaeyoung Lee receiving the A. Belden Fields Award at the 2025 Political Science Awards Banquet">
   <div class="award-text">
     <p class="award-label">2025 &middot; Department of Political Science, UIUC</p>
     <h3>A. Belden Fields Award for Excellence in Undergraduate Teaching as a Teaching Assistant</h3>
