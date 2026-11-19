@@ -76,7 +76,58 @@ show_date: false
   margin-top: 18px;
   line-height: 1.6;
 }
+
+/* Award card (compact split banner) */
+.award {
+  display: flex;
+  border: 1px solid rgba(201, 162, 74, 0.45);
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(201, 162, 74, 0.07);
+  margin-bottom: 28px;
+}
+.award img {
+  flex: 0 0 38%;
+  width: 38%;
+  height: 170px;
+  object-fit: cover;
+  object-position: center 46%;
+  display: block;
+}
+.award-text {
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.award-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #a3822f;
+  margin: 0 0 6px;
+}
+.award h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.4;
+}
+@media (max-width: 600px) {
+  .award { flex-direction: column; }
+  .award img { width: 100%; height: 220px; flex-basis: auto; }
+}
 </style>
+
+## Teaching Award
+
+<div class="award" markdown="0">
+  <img src="/images/teaching_award_2025.jpg" alt="Jaeyoung Lee receiving the A. Belden Fields Award at the 2025 Political Science Awards Banquet">
+  <div class="award-text">
+    <p class="award-label">2025 &middot; Department of Political Science, UIUC</p>
+    <h3>A. Belden Fields Award for Excellence in Undergraduate Teaching as a Teaching Assistant</h3>
+  </div>
+</div>
 
 ## Teaching Assistant, University of Illinois Urbana-Champaign
 
