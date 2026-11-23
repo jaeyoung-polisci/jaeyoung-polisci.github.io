@@ -22,6 +22,16 @@ redirect_from:
 @media (max-width: 600px) {
   .page__hero--overlay { min-height: 180px; }
 }
+
+/* On this page, let the profile sidebar start below the banner
+   instead of floating over it */
+.sidebar {
+  position: relative !important;
+  height: auto !important;
+  padding-top: 0 !important;
+  overflow: visible !important;
+}
+
 /* Shared small-caps section heading (used by both About and News) */
 .section-heading {
   font-size: 0.8rem;
