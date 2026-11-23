@@ -17,7 +17,7 @@ redirect_from:
 /* Banner height */
 .page__hero--overlay {
   min-height: 250px;
-  background-position: center 40%;
+  background-position: center 60%;
 }
 @media (max-width: 600px) {
   .page__hero--overlay { min-height: 180px; }
