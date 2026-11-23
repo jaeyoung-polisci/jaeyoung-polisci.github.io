@@ -16,7 +16,7 @@ redirect_from:
 /* ── Home page styles ───────────────────────────────────────────── */
 /* Banner height */
 .page__hero--overlay {
-  min-height: 250px;
+  min-height: 280px;
   background-position: center 30%;
 }
 @media (max-width: 600px) {
