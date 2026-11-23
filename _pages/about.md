@@ -2,7 +2,7 @@
 permalink: /
 title: ""
 header:
-  overlay_image: manila_fieldwork-2.jpg
+  overlay_image: manila_fieldwork_enhanced.jpg
   overlay_filter: 0.05
   caption: "Manila, Philippines — Fieldwork 2026"
 excerpt: " "
@@ -17,7 +17,7 @@ redirect_from:
 /* Banner height */
 .page__hero--overlay {
   min-height: 250px;
-  background-position: center 60%;
+  background-position: center 40%;
 }
 @media (max-width: 600px) {
   .page__hero--overlay { min-height: 180px; }
