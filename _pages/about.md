@@ -3,7 +3,7 @@ permalink: /
 title: ""
 header:
   overlay_image: manila_fieldwork.jpg
-  overlay_filter: 0.15
+  overlay_filter: 0.05
   caption: "Manila, Philippines — Fieldwork 2026"
 excerpt: " "
 author_profile: true
@@ -23,6 +23,12 @@ redirect_from:
   .page__hero--overlay { min-height: 180px; }
 }
 
+/* Banner caption */
+.page__hero-caption {
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+  
 /* On this page, let the profile sidebar start below the banner
    instead of floating over it */
 .sidebar {
