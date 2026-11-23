@@ -21,6 +21,7 @@ redirect_from:
 }
 @media (max-width: 600px) {
   .page__hero--overlay { min-height: 180px; }
+  .page__hero-caption { font-size: 0.7rem; }
 }
 
 /* Banner caption */
