@@ -32,8 +32,8 @@ author_profile: true
 <div class="gen-wrap" id="gen-wrap">
   <div class="gen-toolbar">
     <div class="gen-seg" role="group" aria-label="View">
-      <button type="button" data-mode="advisor">Advisor lineage</button>
       <button type="button" data-mode="full">Full committees</button>
+      <button type="button" data-mode="advisor">Advisors only</button>
     </div>
     <div class="gen-zoom">
       <button type="button" data-zoom="in" aria-label="Zoom in">+</button>
@@ -79,7 +79,7 @@ author_profile: true
     ['beer', 'kahl', 'advisor'], ['hoff', 'kahl', 'advisor'], ['hoff', 'keoh', 'advisor'], ['powl', 'hube', 'advisor'],
     ['gour', 'pinto', 'advisor'], ['kahl', 'pinto', 'advisor'],
     ['keoh', 'bush', 'advisor'], ['hump', 'bald', 'advisor'], ['hube', 'bald', 'advisor'], ['muri', 'bald', 'advisor'],
-    ['epst', 'wint', 'advisor'], ['pinto', 'wint', 'advisor'], ['hump', 'wint', 'advisor'],
+    ['epst', 'wint', 'committee'], ['pinto', 'wint', 'advisor'], ['hump', 'wint', 'committee'],
     ['bush', 'obu', 'advisor'], ['bald', 'obu', 'committee'], ['schn', 'obu', 'committee'],
     ['wint', 'paul', 'advisor'], ['wint', 'me', 'advisor'], ['obu', 'me', 'advisor']
   ];
@@ -143,7 +143,10 @@ author_profile: true
     wrapEl.style.setProperty(v[0], v[1]);
   });
 
-  var mode = 'advisor';
+  /* how the Advisors-only view behaves: 'dim' keeps everyone in place and fades committee-only links; 'collapse' hides them and redraws a smaller tree */
+  var advisorView = 'dim';
+  var mode = 'full';
+  var advMix = 0;
   var selected = null;
   var userMoved = false;
   var view = { k: 1, tx: 0, ty: 0 };
@@ -197,10 +200,12 @@ author_profile: true
     return out;
   }
 
+  function shape(m) { return advisorView === 'dim' ? 'full' : m; }
+
   function target(m) {
-    var vis = visibleSet(m), t = {};
+    var vis = visibleSet(shape(m)), t = {};
     people.forEach(function (p) {
-      var pos = layouts[m][p.id];
+      var pos = layouts[shape(m)][p.id];
       if (vis[p.id] && pos) {
         t[p.id] = { x: pos[0], y: TOP + pos[1] * ROW, o: 1 };
       } else {
@@ -283,10 +288,12 @@ author_profile: true
     root.setAttribute('transform', 'translate(' + view.tx + ',' + view.ty + ') scale(' + view.k + ')');
     var shared = sharedSet(mode);
     var lin = selected ? lineage(selected) : null;
+    var advSet = (advisorView === 'dim' && advMix > 0) ? visibleSet('advisor') : null;
     people.forEach(function (p) {
       var c = cur[p.id], n = nodeEls[p.id];
       var st = styles[p.kind || (shared[p.id] ? 'shared' : 'base')];
       var o = c.o;
+      if (advSet && !advSet[p.id]) { o = o * (1 - 0.72 * advMix); }
       if (lin && !lin.set[p.id]) { o = o * 0.18; }
       n.g.setAttribute('transform', 'translate(' + c.x + ',' + c.y + ')');
       n.g.setAttribute('opacity', o.toFixed(3));
@@ -301,6 +308,7 @@ author_profile: true
       var a = cur[e[0]], b = cur[e[1]], pe = pathEls[i];
       var o = Math.min(edgeOp[i], a.o, b.o);
       var hot = lin && edgeOnLine(e, lin, selected);
+      if (advSet && !(allowed(e, 'advisor') && advSet[e[0]] && advSet[e[1]])) { o = o * (1 - 0.8 * advMix); }
       if (lin && !hot) { o = o * 0.12; }
       pe.setAttribute('d', linkPath(a, b));
       pe.setAttribute('opacity', o.toFixed(3));
@@ -339,8 +347,9 @@ author_profile: true
   function animateTo(t, v, ms) {
     if (anim) { cancelAnimationFrame(anim); }
     var startCur = {}, startView = { k: view.k, tx: view.tx, ty: view.ty }, startEdge = edgeOp.slice();
-    var vis = visibleSet(mode);
-    var endEdge = edges.map(function (e) { return (allowed(e, mode) && vis[e[0]] && vis[e[1]]) ? 1 : 0; });
+    var vis = visibleSet(shape(mode));
+    var endEdge = edges.map(function (e) { return (allowed(e, shape(mode)) && vis[e[0]] && vis[e[1]]) ? 1 : 0; });
+    var startMix = advMix, endMix = (advisorView === 'dim' && mode === 'advisor') ? 1 : 0;
     people.forEach(function (p) { startCur[p.id] = { x: cur[p.id].x, y: cur[p.id].y, o: cur[p.id].o }; });
     var t0 = null;
     function step(ts) {
@@ -352,6 +361,7 @@ author_profile: true
         cur[p.id] = { x: a.x + (b.x - a.x) * s, y: a.y + (b.y - a.y) * s, o: a.o + (b.o - a.o) * s };
       });
       edgeOp = startEdge.map(function (o, i) { return o + (endEdge[i] - o) * s; });
+      advMix = startMix + (endMix - startMix) * s;
       if (v) {
         view = { k: startView.k + (v.k - startView.k) * s, tx: startView.tx + (v.tx - startView.tx) * s, ty: startView.ty + (v.ty - startView.ty) * s };
       }
@@ -363,7 +373,7 @@ author_profile: true
 
   function setMode(m, instant) {
     mode = m;
-    if (selected && !visibleSet(m)[selected]) { selected = null; }
+    if (selected && !visibleSet(shape(m))[selected]) { selected = null; }
     var buttons = document.querySelectorAll('.gen-seg button');
     Array.prototype.forEach.call(buttons, function (b) { b.className = b.getAttribute('data-mode') === m ? 'on' : ''; });
     var t = target(m);
@@ -372,8 +382,9 @@ author_profile: true
     userMoved = false;
     if (instant) {
       cur = t;
-      var vis = visibleSet(m);
-      edgeOp = edges.map(function (e) { return (allowed(e, m) && vis[e[0]] && vis[e[1]]) ? 1 : 0; });
+      var vis = visibleSet(shape(m));
+      edgeOp = edges.map(function (e) { return (allowed(e, shape(m)) && vis[e[0]] && vis[e[1]]) ? 1 : 0; });
+      advMix = (advisorView === 'dim' && m === 'advisor') ? 1 : 0;
       view = fitView(t, h);
       draw();
     } else {
