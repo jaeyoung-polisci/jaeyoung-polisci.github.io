@@ -7,84 +7,498 @@ author_profile: true
 
 <p>My academic lineage, traced through my dissertation co-chairs and their committees.</p>
 
-<div style="background:#faf8f4; border-radius:12px; padding:20px 12px; overflow-x:auto;">
-  <div id="genealogy" style="min-width:720px;"></div>
+<style>
+.gen-wrap { background: var(--g-wrap); border-radius: 12px; padding: 14px; }
+.gen-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+.gen-seg { display: inline-flex; background: var(--g-seg); border-radius: 8px; padding: 3px; }
+.gen-seg button, .gen-zoom button { font: inherit; font-size: 0.8rem; border: 0; background: transparent; color: var(--g-muted); padding: 6px 12px; border-radius: 6px; cursor: pointer; }
+.gen-seg button.on { background: #fff; color: var(--g-text); box-shadow: 0 1px 2px rgba(0,0,0,0.08); }
+.gen-zoom { display: inline-flex; gap: 4px; }
+.gen-zoom button { background: #fff; border: 1px solid var(--g-line); min-width: 34px; padding: 5px 10px; color: var(--g-text); }
+.gen-zoom button:hover, .gen-seg button:hover { color: var(--g-text); }
+.gen-canvas { position: relative; height: 520px; transition: height 0.4s ease; background: var(--g-canvas); border: 1px solid var(--g-line); border-radius: 10px; overflow: hidden; cursor: grab; }
+.gen-canvas.dragging { cursor: grabbing; }
+.gen-canvas svg { display: block; width: 100%; height: 100%; touch-action: pan-x pan-y; user-select: none; -webkit-user-select: none; }
+.gen-hint { position: absolute; left: 12px; bottom: 8px; font-size: 0.7rem; color: var(--g-faint); pointer-events: none; }
+.gen-node { cursor: pointer; }
+.gen-node:focus { outline: none; }
+.gen-node:focus-visible rect { stroke: var(--g-hot); stroke-width: 2; }
+.gen-legend { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 10px; font-size: 0.75rem; color: var(--g-muted); }
+.gen-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.gen-hint .m { display: none; }
+@media (max-width: 600px) { .gen-hint .d { display: none; } .gen-hint .m { display: inline; } }
+</style>
+
+<div class="gen-wrap" id="gen-wrap">
+  <div class="gen-toolbar">
+    <div class="gen-seg" role="group" aria-label="View">
+      <button type="button" data-mode="advisor">Advisor lineage</button>
+      <button type="button" data-mode="full">Full committees</button>
+    </div>
+    <div class="gen-zoom">
+      <button type="button" data-zoom="in" aria-label="Zoom in">+</button>
+      <button type="button" data-zoom="out" aria-label="Zoom out">&minus;</button>
+      <button type="button" data-zoom="fit">Fit</button>
+    </div>
+  </div>
+  <div class="gen-canvas" id="gen-canvas">
+    <div class="gen-hint"><span class="d">Drag to move &middot; pinch or &#8984;/Ctrl + scroll to zoom &middot; click a name to trace its line</span><span class="m">Pinch to zoom &middot; tap a name to trace its line</span></div>
+  </div>
+  <div class="gen-legend">
+    <span><svg width="28" height="8"><line x1="0" y1="4" x2="28" y2="4" style="stroke: var(--g-link)" stroke-width="1.6"/></svg>Advisor</span>
+    <span><svg width="28" height="8"><line x1="0" y1="4" x2="28" y2="4" style="stroke: var(--g-link)" stroke-width="1.6" stroke-dasharray="5 4"/></svg>Committee member</span>
+    <span><svg width="14" height="14"><rect x="1" y="1" width="12" height="12" rx="3" style="fill: var(--g-shared-fill); stroke: var(--g-shared-stroke)" stroke-width="1.5"/></svg>Shared by both co-chairs&rsquo; lines</span>
+  </div>
 </div>
 
 <script>
 (function () {
   var people = [
-    { id: 'beer',  name: 'Samuel H. Beer',      sub: '',                      x: 225, row: 0 },
-    { id: 'hoff',  name: 'Stanley Hoffmann',    sub: 'Univ. of Paris · 1953', x: 455, row: 0, kind: 'shared' },
-    { id: 'powl',  name: 'G. Bingham Powell',   sub: '',                      x: 765, row: 0 },
-    { id: 'gour',  name: 'Peter Gourevitch',    sub: 'Harvard · 1969',        x: 150, row: 1 },
-    { id: 'kahl',  name: 'Miles Kahler',        sub: 'Harvard',               x: 300, row: 1 },
-    { id: 'hump',  name: 'Macartan Humphreys',  sub: 'Harvard · 2003',        x: 455, row: 1, kind: 'shared' },
-    { id: 'keoh',  name: 'Robert O. Keohane',   sub: 'Harvard · 1966',        x: 610, row: 1 },
-    { id: 'hube',  name: 'John D. Huber',       sub: 'Rochester · 1991',      x: 765, row: 1 },
-    { id: 'muri',  name: 'M. Victoria Murillo', sub: 'Harvard · 1997',        x: 920, row: 1 },
-    { id: 'epst',  name: 'David Epstein',       sub: '',                      x: 75,  row: 2 },
-    { id: 'pinto', name: 'Pablo M. Pinto',      sub: 'UC San Diego · 2004',   x: 225, row: 2 },
-    { id: 'bush',  name: 'Sarah Bush',          sub: 'Princeton · 2011',      x: 610, row: 2 },
-    { id: 'bald',  name: 'Kate Baldwin',        sub: 'Columbia · 2010',       x: 765, row: 2 },
-    { id: 'schn',  name: 'Christina Schneider', sub: 'Konstanz · 2006',       x: 920, row: 2 },
-    { id: 'wint',  name: 'Matt Winters',        sub: 'Columbia · 2009',       x: 310, row: 3 },
-    { id: 'obu',   name: "Cleo O'Brien-Udry",   sub: 'Yale · 2023',           x: 765, row: 3 },
-    { id: 'paul',  name: 'Paul Un',             sub: 'University of Konstanz · Postdoc', x: 170, row: 4, kind: 'sibling', w: 200 },
-    { id: 'me',    name: 'Jaeyoung Lee',        sub: 'UIUC · exp. 2028',      x: 540, row: 4, kind: 'me' }
-  ];
-  var links = [
-    ['beer','kahl'], ['hoff','kahl'], ['hoff','keoh'], ['powl','hube'],
-    ['gour','pinto'], ['kahl','pinto'],
-    ['keoh','bush'], ['hump','bald'], ['hube','bald'], ['muri','bald'],
-    ['epst','wint'], ['pinto','wint'], ['hump','wint'],
-    ['bush','obu'], ['bald','obu'], ['schn','obu'],
-    ['wint','paul'], ['wint','me'], ['obu','me']
+    { id: 'beer',  name: 'Samuel H. Beer',      sub: '' },
+    { id: 'hoff',  name: 'Stanley Hoffmann',    sub: 'Univ. of Paris · 1953' },
+    { id: 'powl',  name: 'G. Bingham Powell',   sub: '' },
+    { id: 'gour',  name: 'Peter Gourevitch',    sub: 'Harvard · 1969' },
+    { id: 'kahl',  name: 'Miles Kahler',        sub: 'Harvard' },
+    { id: 'hump',  name: 'Macartan Humphreys',  sub: 'Harvard · 2003' },
+    { id: 'keoh',  name: 'Robert O. Keohane',   sub: 'Harvard · 1966' },
+    { id: 'hube',  name: 'John D. Huber',       sub: 'Rochester · 1991' },
+    { id: 'muri',  name: 'M. Victoria Murillo', sub: 'Harvard · 1997' },
+    { id: 'epst',  name: 'David Epstein',       sub: '' },
+    { id: 'pinto', name: 'Pablo M. Pinto',      sub: 'UC San Diego · 2004' },
+    { id: 'bush',  name: 'Sarah Bush',          sub: 'Princeton · 2011' },
+    { id: 'bald',  name: 'Kate Baldwin',        sub: 'Columbia · 2010' },
+    { id: 'schn',  name: 'Christina Schneider', sub: 'Konstanz · 2006' },
+    { id: 'wint',  name: 'Matt Winters',        sub: 'Columbia · 2009' },
+    { id: 'obu',   name: "Cleo O'Brien-Udry",   sub: 'Yale · 2023' },
+    { id: 'paul',  name: 'Paul Un',             sub: 'University of Konstanz · Postdoc', w: 200, kind: 'sibling' },
+    { id: 'me',    name: 'Jaeyoung Lee',        sub: 'UIUC · exp. 2028', kind: 'me' }
   ];
 
-  var W = 1000, rowGap = 104, top = 44, bw = 140, bh = 50;
-  var maxRow = Math.max.apply(null, people.map(function (p) { return p.row; }));
-  var H = top + rowGap * maxRow + 50;
-  var byId = {};
-  people.forEach(function (p) { p.y = top + p.row * rowGap; byId[p.id] = p; });
-  var esc = function (s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;'); };
+  /* [advisor or committee member, student, type] */
+  var edges = [
+    ['beer', 'kahl', 'advisor'], ['hoff', 'kahl', 'advisor'], ['hoff', 'keoh', 'advisor'], ['powl', 'hube', 'advisor'],
+    ['gour', 'pinto', 'advisor'], ['kahl', 'pinto', 'advisor'],
+    ['keoh', 'bush', 'advisor'], ['hump', 'bald', 'advisor'], ['hube', 'bald', 'advisor'], ['muri', 'bald', 'advisor'],
+    ['epst', 'wint', 'advisor'], ['pinto', 'wint', 'advisor'], ['hump', 'wint', 'advisor'],
+    ['bush', 'obu', 'advisor'], ['bald', 'obu', 'committee'], ['schn', 'obu', 'committee'],
+    ['wint', 'paul', 'advisor'], ['wint', 'me', 'advisor'], ['obu', 'me', 'advisor']
+  ];
 
-  var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Academic genealogy tree">';
-  links.forEach(function (l) {
-    var a = byId[l[0]], b = byId[l[1]];
-    if (!a || !b) return;
-    var y1 = a.y + bh / 2, y2 = b.y - bh / 2, ym = (y1 + y2) / 2;
-    s += '<path d="M' + a.x + ' ' + y1 + ' C' + a.x + ' ' + ym + ',' + b.x + ' ' + ym + ',' + b.x + ' ' + y2 +
-         '" fill="none" stroke="#c9c2b6" stroke-width="1.4"/>';
-  });
-  var styles = {
-    me:      { fill: '#2d6f80', stroke: '#2d6f80', name: '#ffffff', sub: '#d3e6eb', dash: '' },
-    sibling: { fill: '#eef5f6', stroke: '#b7d3da', name: '#2b2b2b', sub: '#6f7f83', dash: '' },
-    shared:  { fill: '#fffaf0', stroke: '#c9a24a', name: '#2b2b2b', sub: '#8a7440', dash: '' },
-    unknown: { fill: 'none',    stroke: '#c9c2b6', name: '#a39d93', sub: '#a39d93', dash: '4 4' },
-    base:    { fill: '#ffffff', stroke: '#e2ddd3', name: '#2b2b2b', sub: '#8a857c', dash: '' }
+  /* positions per view: id: [x, row] */
+  var layouts = {
+    advisor: {
+      beer: [300, 0], hoff: [520, 0],
+      gour: [230, 1], kahl: [400, 1], keoh: [640, 1],
+      epst: [120, 2], pinto: [315, 2], hump: [480, 2], bush: [640, 2],
+      wint: [315, 3], obu: [640, 3],
+      paul: [170, 4], me: [480, 4]
+    },
+    full: {
+      beer: [225, 0], hoff: [455, 0], powl: [765, 0],
+      gour: [150, 1], kahl: [300, 1], hump: [455, 1], keoh: [610, 1], hube: [765, 1], muri: [920, 1],
+      epst: [75, 2], pinto: [225, 2], bush: [610, 2], bald: [765, 2], schn: [920, 2],
+      wint: [310, 3], obu: [765, 3],
+      paul: [170, 4], me: [540, 4]
+    }
   };
-  people.forEach(function (p) {
-    var st = styles[p.kind || 'base'];
-    var w = p.w || bw;
-    s += '<rect x="' + (p.x - w / 2) + '" y="' + (p.y - bh / 2) + '" width="' + w + '" height="' + bh +
-         '" rx="10" fill="' + st.fill + '" stroke="' + st.stroke + '" stroke-width="' + (p.kind === 'shared' ? 1.5 : 1) +
-         '"' + (st.dash ? ' stroke-dasharray="' + st.dash + '"' : '') + '/>';
-    s += '<text data-fit="' + (w - 16) + '" x="' + p.x + '" y="' + (p.y + (p.sub ? -3 : 5)) + '" text-anchor="middle" font-family="Georgia, \'Times New Roman\', serif" font-size="14.5" fill="' + st.name + '">' + esc(p.name) + '</text>';
-    if (p.sub) s += '<text data-fit="' + (w - 16) + '" x="' + p.x + '" y="' + (p.y + 14) + '" text-anchor="middle" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11" letter-spacing="0.3" fill="' + st.sub + '">' + esc(p.sub) + '</text>';
-  });
-  s += '</svg>';
-  document.getElementById('genealogy').innerHTML = s;
 
-  /* shrink any name that is wider than its box */
-  var texts = document.querySelectorAll('#genealogy text[data-fit]');
-  Array.prototype.forEach.call(texts, function (t) {
-    var max = parseFloat(t.getAttribute('data-fit'));
-    var len = t.getComputedTextLength();
-    if (len > max) {
-      var size = parseFloat(t.getAttribute('font-size'));
-      t.setAttribute('font-size', (size * max / len).toFixed(2));
+  var TOP = 40, ROW = 104, BW = 140, BH = 50;
+  var NS = 'http://www.w3.org/2000/svg';
+  var canvas = document.getElementById('gen-canvas');
+  if (!canvas) { return; }
+
+  var byId = {};
+  people.forEach(function (p) { byId[p.id] = p; p.w = p.w || BW; });
+
+  /* ── Colors: edit this block to restyle the whole tree ── */
+  var palette = {
+    wrap: '#f4f5f7',
+    canvas: '#ffffff',
+    seg: '#e7e9ee',
+    line: '#e1e4ea',
+    text: '#1f2328',
+    muted: '#5f6670',
+    faint: '#a0a6ae',
+    link: '#c3c8d0',
+    hot: '#3b5b92',
+    me: '#24292f',
+    meSub: '#c9ced6',
+    sibFill: '#f1f3f6',
+    sibLine: '#c9ced6',
+    shFill: '#eef3fb',
+    shLine: '#3b5b92',
+    shText: '#3b5b92'
+  };
+
+  var styles = {
+    me:      { fill: palette.me,      stroke: palette.me,      name: '#ffffff',     sub: palette.meSub },
+    sibling: { fill: palette.sibFill, stroke: palette.sibLine, name: palette.text,  sub: palette.muted },
+    shared:  { fill: palette.shFill,  stroke: palette.shLine,  name: palette.text,  sub: palette.shText },
+    base:    { fill: '#ffffff',       stroke: palette.line,    name: palette.text,  sub: palette.muted }
+  };
+  var wrapEl = document.getElementById('gen-wrap');
+  [['--g-wrap', palette.wrap], ['--g-canvas', palette.canvas], ['--g-seg', palette.seg], ['--g-line', palette.line],
+   ['--g-text', palette.text], ['--g-muted', palette.muted], ['--g-faint', palette.faint], ['--g-link', palette.link],
+   ['--g-hot', palette.hot], ['--g-shared-fill', palette.shFill], ['--g-shared-stroke', palette.shLine]].forEach(function (v) {
+    wrapEl.style.setProperty(v[0], v[1]);
+  });
+
+  var mode = 'advisor';
+  var selected = null;
+  var userMoved = false;
+  var view = { k: 1, tx: 0, ty: 0 };
+  var cur = {};
+  var edgeOp = [];
+
+  function el(tag, attrs) {
+    var e = document.createElementNS(NS, tag);
+    for (var a in attrs) { if (attrs.hasOwnProperty(a)) { e.setAttribute(a, attrs[a]); } }
+    return e;
+  }
+
+  function allowed(e, m) { return m === 'full' || e[2] === 'advisor'; }
+
+  function parentsOf(id, m) {
+    return edges.filter(function (e) { return e[1] === id && allowed(e, m); }).map(function (e) { return e[0]; });
+  }
+
+  function childrenOf(id, m) {
+    return edges.filter(function (e) { return e[0] === id && allowed(e, m); }).map(function (e) { return e[1]; });
+  }
+
+  function ancestors(id, m) {
+    var out = {}, stack = [id];
+    while (stack.length) {
+      var c = stack.pop();
+      parentsOf(c, m).forEach(function (p) { if (!out[p]) { out[p] = true; stack.push(p); } });
+    }
+    return out;
+  }
+
+  function descendants(id, m, vis) {
+    var out = {}, stack = [id];
+    while (stack.length) {
+      var c = stack.pop();
+      childrenOf(c, m).forEach(function (ch) { if (vis[ch] && !out[ch]) { out[ch] = true; stack.push(ch); } });
+    }
+    return out;
+  }
+
+  function visibleSet(m) {
+    var vis = ancestors('me', m);
+    vis.me = true;
+    parentsOf('me', m).forEach(function (p) { childrenOf(p, m).forEach(function (c) { vis[c] = true; }); });
+    return vis;
+  }
+
+  function sharedSet(m) {
+    var a = ancestors('wint', m), b = ancestors('obu', m), out = {};
+    for (var k in a) { if (b[k]) { out[k] = true; } }
+    return out;
+  }
+
+  function target(m) {
+    var vis = visibleSet(m), t = {};
+    people.forEach(function (p) {
+      var pos = layouts[m][p.id];
+      if (vis[p.id] && pos) {
+        t[p.id] = { x: pos[0], y: TOP + pos[1] * ROW, o: 1 };
+      } else {
+        var c = cur[p.id] || { x: 500, y: TOP };
+        t[p.id] = { x: c.x, y: c.y, o: 0 };
+      }
+    });
+    return t;
+  }
+
+  /* build the SVG */
+  var svg = el('svg', { role: 'img', 'aria-label': 'Academic genealogy tree' });
+  var root = el('g', {});
+  var gLinks = el('g', {});
+  var gNodes = el('g', {});
+  root.appendChild(gLinks);
+  root.appendChild(gNodes);
+  svg.appendChild(root);
+  canvas.insertBefore(svg, canvas.firstChild);
+
+  var pathEls = edges.map(function (e) {
+    var p = el('path', { fill: 'none', stroke: palette.link, 'stroke-width': '1.4' });
+    if (e[2] === 'committee') { p.setAttribute('stroke-dasharray', '5 4'); }
+    gLinks.appendChild(p);
+    return p;
+  });
+
+  var nodeEls = {};
+  people.forEach(function (p) {
+    var g = el('g', { 'class': 'gen-node', tabindex: '0', role: 'button', 'aria-label': p.name });
+    g.setAttribute('data-id', p.id);
+    var r = el('rect', { x: -p.w / 2, y: -BH / 2, width: p.w, height: BH, rx: 10 });
+    var t1 = el('text', { x: 0, y: p.sub ? -3 : 5, 'text-anchor': 'middle', 'font-family': "Georgia, 'Times New Roman', serif", 'font-size': '14.5' });
+    t1.textContent = p.name;
+    g.appendChild(r);
+    g.appendChild(t1);
+    var t2 = null;
+    if (p.sub) {
+      t2 = el('text', { x: 0, y: 14, 'text-anchor': 'middle', 'font-family': '-apple-system, Helvetica, Arial, sans-serif', 'font-size': '11', 'letter-spacing': '0.3' });
+      t2.textContent = p.sub;
+      g.appendChild(t2);
+    }
+    gNodes.appendChild(g);
+    nodeEls[p.id] = { g: g, rect: r, name: t1, sub: t2 };
+    g.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); select(p.id); }
+    });
+  });
+
+  /* shrink any name wider than its box */
+  people.forEach(function (p) {
+    [nodeEls[p.id].name, nodeEls[p.id].sub].forEach(function (t) {
+      if (!t) { return; }
+      var max = p.w - 16, len = t.getComputedTextLength();
+      if (len > max) { t.setAttribute('font-size', (parseFloat(t.getAttribute('font-size')) * max / len).toFixed(2)); }
+    });
+  });
+
+  function linkPath(a, b) {
+    var y1 = a.y + BH / 2, y2 = b.y - BH / 2, ym = (y1 + y2) / 2;
+    return 'M' + a.x + ' ' + y1 + ' C' + a.x + ' ' + ym + ',' + b.x + ' ' + ym + ',' + b.x + ' ' + y2;
+  }
+
+  function lineage(id) {
+    var vis = visibleSet(mode);
+    var up = ancestors(id, mode), down = descendants(id, mode, vis), set = {};
+    set[id] = true;
+    for (var a in up) { if (vis[a]) { set[a] = true; } }
+    for (var d in down) { set[d] = true; }
+    return { set: set, up: up, down: down };
+  }
+
+  function edgeOnLine(e, lin, id) {
+    var upSelf = lin.up[e[1]] || e[1] === id;
+    var downSelf = lin.down[e[0]] || e[0] === id;
+    return (upSelf && lin.up[e[0]]) || (downSelf && lin.down[e[1]]);
+  }
+
+  function draw() {
+    root.setAttribute('transform', 'translate(' + view.tx + ',' + view.ty + ') scale(' + view.k + ')');
+    var shared = sharedSet(mode);
+    var lin = selected ? lineage(selected) : null;
+    people.forEach(function (p) {
+      var c = cur[p.id], n = nodeEls[p.id];
+      var st = styles[p.kind || (shared[p.id] ? 'shared' : 'base')];
+      var o = c.o;
+      if (lin && !lin.set[p.id]) { o = o * 0.18; }
+      n.g.setAttribute('transform', 'translate(' + c.x + ',' + c.y + ')');
+      n.g.setAttribute('opacity', o.toFixed(3));
+      n.g.style.display = c.o < 0.01 ? 'none' : '';
+      n.rect.setAttribute('fill', st.fill);
+      n.rect.setAttribute('stroke', p.id === selected ? palette.hot : st.stroke);
+      n.rect.setAttribute('stroke-width', p.id === selected ? 2 : (st === styles.shared ? 1.5 : 1));
+      n.name.setAttribute('fill', st.name);
+      if (n.sub) { n.sub.setAttribute('fill', st.sub); }
+    });
+    edges.forEach(function (e, i) {
+      var a = cur[e[0]], b = cur[e[1]], pe = pathEls[i];
+      var o = Math.min(edgeOp[i], a.o, b.o);
+      var hot = lin && edgeOnLine(e, lin, selected);
+      if (lin && !hot) { o = o * 0.12; }
+      pe.setAttribute('d', linkPath(a, b));
+      pe.setAttribute('opacity', o.toFixed(3));
+      pe.setAttribute('stroke', hot ? palette.hot : palette.link);
+      pe.setAttribute('stroke-width', hot ? '2' : '1.4');
+      pe.style.display = o < 0.01 ? 'none' : '';
+    });
+  }
+
+  function bbox(t) {
+    var b = { x0: Infinity, x1: -Infinity, y0: Infinity, y1: -Infinity };
+    people.forEach(function (p) {
+      var c = t[p.id];
+      if (c.o < 0.5) { return; }
+      b.x0 = Math.min(b.x0, c.x - p.w / 2); b.x1 = Math.max(b.x1, c.x + p.w / 2);
+      b.y0 = Math.min(b.y0, c.y - BH / 2); b.y1 = Math.max(b.y1, c.y + BH / 2);
+    });
+    return b;
+  }
+
+  /* make the canvas only as tall as the tree needs at the current width */
+  function canvasHeight(t) {
+    var b = bbox(t), cw = canvas.clientWidth;
+    var k = Math.min((cw - 48) / (b.x1 - b.x0), 1.4);
+    return Math.round(Math.max(240, Math.min(600, (b.y1 - b.y0) * k + 62)));
+  }
+
+  function fitView(t, hOverride) {
+    var b = bbox(t);
+    var cw = canvas.clientWidth, ch = hOverride || canvas.clientHeight, pad = 24;
+    var k = Math.min((cw - 2 * pad) / (b.x1 - b.x0), (ch - 2 * pad - 14) / (b.y1 - b.y0), 1.4);
+    return { k: k, tx: (cw - (b.x1 - b.x0) * k) / 2 - b.x0 * k, ty: (ch - 14 - (b.y1 - b.y0) * k) / 2 - b.y0 * k };
+  }
+
+  var anim = null;
+  function animateTo(t, v, ms) {
+    if (anim) { cancelAnimationFrame(anim); }
+    var startCur = {}, startView = { k: view.k, tx: view.tx, ty: view.ty }, startEdge = edgeOp.slice();
+    var vis = visibleSet(mode);
+    var endEdge = edges.map(function (e) { return (allowed(e, mode) && vis[e[0]] && vis[e[1]]) ? 1 : 0; });
+    people.forEach(function (p) { startCur[p.id] = { x: cur[p.id].x, y: cur[p.id].y, o: cur[p.id].o }; });
+    var t0 = null;
+    function step(ts) {
+      if (t0 === null) { t0 = ts; }
+      var u = Math.min(1, (ts - t0) / ms);
+      var s = u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2;
+      people.forEach(function (p) {
+        var a = startCur[p.id], b = t[p.id];
+        cur[p.id] = { x: a.x + (b.x - a.x) * s, y: a.y + (b.y - a.y) * s, o: a.o + (b.o - a.o) * s };
+      });
+      edgeOp = startEdge.map(function (o, i) { return o + (endEdge[i] - o) * s; });
+      if (v) {
+        view = { k: startView.k + (v.k - startView.k) * s, tx: startView.tx + (v.tx - startView.tx) * s, ty: startView.ty + (v.ty - startView.ty) * s };
+      }
+      draw();
+      if (u < 1) { anim = requestAnimationFrame(step); } else { anim = null; }
+    }
+    anim = requestAnimationFrame(step);
+  }
+
+  function setMode(m, instant) {
+    mode = m;
+    if (selected && !visibleSet(m)[selected]) { selected = null; }
+    var buttons = document.querySelectorAll('.gen-seg button');
+    Array.prototype.forEach.call(buttons, function (b) { b.className = b.getAttribute('data-mode') === m ? 'on' : ''; });
+    var t = target(m);
+    var h = canvasHeight(t);
+    canvas.style.height = h + 'px';
+    userMoved = false;
+    if (instant) {
+      cur = t;
+      var vis = visibleSet(m);
+      edgeOp = edges.map(function (e) { return (allowed(e, m) && vis[e[0]] && vis[e[1]]) ? 1 : 0; });
+      view = fitView(t, h);
+      draw();
+    } else {
+      animateTo(t, fitView(t, h), 650);
+    }
+  }
+
+  function select(id) {
+    selected = (selected === id) ? null : id;
+    draw();
+  }
+
+  function zoomAt(f, cx, cy) {
+    var k2 = Math.max(0.3, Math.min(3, view.k * f));
+    view.tx = cx - (cx - view.tx) * (k2 / view.k);
+    view.ty = cy - (cy - view.ty) * (k2 / view.k);
+    view.k = k2;
+    userMoved = true;
+    draw();
+  }
+
+  /* toolbar */
+  Array.prototype.forEach.call(document.querySelectorAll('.gen-seg button'), function (b) {
+    b.addEventListener('click', function () { setMode(b.getAttribute('data-mode'), false); });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('.gen-zoom button'), function (b) {
+    b.addEventListener('click', function () {
+      var z = b.getAttribute('data-zoom'), cx = canvas.clientWidth / 2, cy = canvas.clientHeight / 2;
+      if (z === 'in') { zoomAt(1.25, cx, cy); }
+      else if (z === 'out') { zoomAt(0.8, cx, cy); }
+      else { userMoved = false; var t = target(mode), h = canvasHeight(t); canvas.style.height = h + 'px'; animateTo(t, fitView(t, h), 400); }
+    });
+  });
+
+  /* zoom with Ctrl/Cmd + wheel or trackpad pinch; plain wheel keeps scrolling the page */
+  svg.addEventListener('wheel', function (e) {
+    if (!e.ctrlKey && !e.metaKey) { return; }
+    e.preventDefault();
+    var r = svg.getBoundingClientRect();
+    var d = e.deltaY * (e.deltaMode === 1 ? 33 : 1);
+    zoomAt(Math.exp(-d * 0.0025), e.clientX - r.left, e.clientY - r.top);
+  }, { passive: false });
+
+  /* mouse drag to pan, two-finger pinch to zoom, click or tap to select */
+  var ptrs = {}, drag = null, pinch = null, downNode = null, moved = false;
+  function nodeFrom(target) {
+    while (target && target !== svg) {
+      if (target.getAttribute && target.getAttribute('data-id')) { return target.getAttribute('data-id'); }
+      target = target.parentNode;
+    }
+    return null;
+  }
+  function count() { return Object.keys(ptrs).length; }
+
+  svg.addEventListener('pointerdown', function (e) {
+    var r = svg.getBoundingClientRect();
+    ptrs[e.pointerId] = { x: e.clientX - r.left, y: e.clientY - r.top };
+    moved = false;
+    downNode = nodeFrom(e.target);
+    if (e.pointerType !== 'touch' && e.button === 0) {
+      drag = { x: e.clientX, y: e.clientY, tx: view.tx, ty: view.ty };
+    }
+    if (count() === 2) {
+      var ks = Object.keys(ptrs), a = ptrs[ks[0]], b = ptrs[ks[1]];
+      pinch = { d: Math.hypot(a.x - b.x, a.y - b.y), mx: (a.x + b.x) / 2, my: (a.y + b.y) / 2, k: view.k, tx: view.tx, ty: view.ty };
+      moved = true;
     }
   });
+
+  svg.addEventListener('pointermove', function (e) {
+    if (!ptrs[e.pointerId]) { return; }
+    var r = svg.getBoundingClientRect();
+    ptrs[e.pointerId] = { x: e.clientX - r.left, y: e.clientY - r.top };
+    if (pinch && count() === 2) {
+      var ks = Object.keys(ptrs), a = ptrs[ks[0]], b = ptrs[ks[1]];
+      var d = Math.hypot(a.x - b.x, a.y - b.y), mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
+      var k2 = Math.max(0.3, Math.min(3, pinch.k * d / pinch.d));
+      view.k = k2;
+      view.tx = mx - (pinch.mx - pinch.tx) * (k2 / pinch.k);
+      view.ty = my - (pinch.my - pinch.ty) * (k2 / pinch.k);
+      userMoved = true;
+      draw();
+      return;
+    }
+    if (drag) {
+      var dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+      if (!moved && Math.abs(dx) + Math.abs(dy) > 4) {
+        moved = true;
+        canvas.className = 'gen-canvas dragging';
+        try { svg.setPointerCapture(e.pointerId); } catch (err) {}
+      }
+      if (moved) {
+        view.tx = drag.tx + dx;
+        view.ty = drag.ty + dy;
+        userMoved = true;
+        draw();
+      }
+    }
+  });
+
+  function endPointer(e, cancelled) {
+    if (!ptrs[e.pointerId]) { return; }
+    delete ptrs[e.pointerId];
+    if (count() < 2) { pinch = null; }
+    if (count() === 0) {
+      if (!moved && !cancelled) {
+        if (downNode) { select(downNode); }
+        else if (selected) { selected = null; draw(); }
+      }
+      drag = null;
+      downNode = null;
+      canvas.className = 'gen-canvas';
+    }
+  }
+  svg.addEventListener('pointerup', function (e) { endPointer(e, false); });
+  svg.addEventListener('pointercancel', function (e) { endPointer(e, true); });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && selected) { selected = null; draw(); }
+  });
+
+  window.addEventListener('resize', function () {
+    if (!userMoved) { var t = target(mode), h = canvasHeight(t); canvas.style.height = h + 'px'; view = fitView(t, h); draw(); }
+  });
+
+  setMode(mode, true);
 })();
 </script>
