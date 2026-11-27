@@ -22,7 +22,7 @@ show_date: false
   justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
-  margin-bottom: 18px;
+  margin-bottom: 28px;
 }
 .contact-label {
   font-size: 0.75rem;
@@ -53,16 +53,7 @@ show_date: false
 }
 .contact-actions a:hover,
 .contact-actions button:hover { background: rgba(128, 128, 128, 0.08); }
-.contact-note {
-  font-size: 0.88rem;
-  opacity: 0.6;
-  line-height: 1.6;
-}
 </style>
-
-<p class="contact-intro">If you came across my research and something caught your eye, whether it is the politics of foreign aid, how governments talk about the aid they receive, or an idea for a collaboration, please feel free to reach out.</p>
-
-<p class="contact-intro">My fieldwork in the Philippines, interviewing government officials, and donor representatives, was possible in large part because political scientists who work on the Philippines generously met with me when I reached out out of the blue, and guided me through every step. I would love to pay that kindness forward, so if you are preparing fieldwork of your own or simply have questions about it, those conversations are very welcome too. I would be delighted to set up a short call and chat!</p>
 
 <div class="contact-block" markdown="0">
   <div>
@@ -75,6 +66,9 @@ show_date: false
   </div>
 </div>
 
+<p class="contact-intro">If you came across my research and something caught your eye, whether it is the politics of foreign aid, how governments talk about the aid they receive, or an idea for a collaboration, please feel free to reach out.</p>
+
+<p class="contact-intro">My fieldwork in the Philippines, interviewing government officials and donor representatives, was possible in large part because political scientists who work on the Philippines generously met with me when I reached out out of the blue, and guided me through every step. I would love to pay that kindness forward, so if you are preparing fieldwork of your own or simply have questions about it, those conversations are very welcome too. I would be delighted to set up a short call and chat!</p>
 
 <script>
 (function () {
