@@ -75,7 +75,6 @@ show_date: false
   </div>
 </div>
 
-<p class="contact-note">A quick note about what you would like to talk about, along with a few times that work for you, is a perfect way to start.</p>
 
 <script>
 (function () {
