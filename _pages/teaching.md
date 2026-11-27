@@ -77,34 +77,66 @@ show_date: false
   line-height: 1.6;
 }
 
-/* Award card (compact split banner) */
+/* Award card (large photo with caption below) */
 .award {
-  display: flex;
-  border: 1px solid rgba(201, 162, 74, 0.45);
+  max-width: 460px;
+  border: 1px solid rgba(128, 128, 128, 0.25);
   border-radius: 10px;
   overflow: hidden;
-  background: rgba(201, 162, 74, 0.07);
+  background: rgba(128, 128, 128, 0.04);
   margin-bottom: 28px;
 }
-.award img {
-  flex: 0 0 38%;
-  width: 38%;
-  height: 170px;
-  object-fit: cover;
-  object-position: center 46%;
+.award-photo {
+  position: relative;
   display: block;
+  cursor: zoom-in;
+  border-bottom: none !important;
+}
+.award-photo img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1.55 / 1;
+  object-fit: cover;
+  object-position: center 50%;
+}
+.award-photo span {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  font-size: 0.7rem;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.55);
+  padding: 2px 9px;
+  border-radius: 10px;
+}
+
+/* Full-size photo overlay */
+.photo-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.85);
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  cursor: zoom-out;
+}
+.photo-overlay.open { display: flex; }
+.photo-overlay img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 6px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
 }
 .award-text {
-  padding: 16px 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  padding: 14px 20px 16px;
 }
 .award .award-label {
   font-size: 0.75rem;
   font-weight: 400;
   letter-spacing: 0.04em;
-  color: #a3822f;
+  color: #3b5b92;
   margin: 0 0 4px;
 }
 .award .award-text h3 {
@@ -113,21 +145,35 @@ show_date: false
   font-weight: 500;
   line-height: 1.45;
 }
-@media (max-width: 600px) {
-  .award { flex-direction: column; }
-  .award img { width: 100%; height: 220px; flex-basis: auto; }
-}
 </style>
 
 ## Teaching Award
 
 <div class="award" markdown="0">
-  <img src="{{ '/images/teaching_award_2025.jpg' | relative_url }}" alt="Jaeyoung Lee receiving the A. Belden Fields Award at the 2025 Political Science Awards Banquet">
+  <a class="award-photo" href="{{ '/images/teaching_award_2025_full.jpg' | relative_url }}" id="award-photo">
+    <img src="{{ '/images/teaching_award_2025_card.jpg' | relative_url }}" alt="Jaeyoung Lee receiving the A. Belden Fields Award at the 2025 Political Science Awards Banquet">
+    <span>View photo</span>
+  </a>
   <div class="award-text">
     <p class="award-label">2025 &middot; Department of Political Science, UIUC</p>
     <h3>A. Belden Fields Award for Excellence in Undergraduate Teaching as a Teaching Assistant</h3>
   </div>
 </div>
+
+<div class="photo-overlay" id="photo-overlay" markdown="0">
+  <img src="{{ '/images/teaching_award_2025_full.jpg' | relative_url }}" alt="Jaeyoung Lee receiving the A. Belden Fields Award at the 2025 Political Science Awards Banquet">
+</div>
+
+<script>
+(function () {
+  var link = document.getElementById('award-photo');
+  var overlay = document.getElementById('photo-overlay');
+  if (!link || !overlay) { return; }
+  link.addEventListener('click', function (e) { e.preventDefault(); overlay.className = 'photo-overlay open'; });
+  overlay.addEventListener('click', function () { overlay.className = 'photo-overlay'; });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { overlay.className = 'photo-overlay'; } });
+})();
+</script>
 
 ## Teaching Assistant, University of Illinois Urbana-Champaign
 
